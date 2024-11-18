@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ovarian Cancer Prediction</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #52d9c0, #7087ed);
+            color: #202020;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            position: relative;
+        }
+        h1 {
+            position: absolute;
+            top: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 36px;
+            background: linear-gradient(90deg, #32121c, #e92d63);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+        }
+        form {
+            max-width: 500px;
+            width: 100%;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 30px 40px;
+            margin-top: 100px;
+        }
+        label {
+            font-size: 14px;
+            color: #555;
+            margin: 10px 0 5px;
+            display: block;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            background-color: #ffe4e6;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+        input:focus {
+            background-color: #ffccd5;
+            border-color: #de5169;
+        }
+        input:hover {
+            background-color: #ffe4ea;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #ff758c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: 15px;
+        }
+        button:hover {
+            background-color: #bc4b62;
+            transform: translateY(-2px);
+        }
+        .result {
+            position: absolute;
+            top: 120px;
+            right: 50px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+            width: 300px;
+            text-align: center;
+        }
+        .result h3 {
+            color: #e6435e;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .result p {
+            font-size: 14px;
+            color: #202020;
+        }
+        .result p[style="color: red;"] {
+            font-weight: bold;
+        }
+        @media (max-width: 800px) {
+            .result {
+                position: unset;
+                top: unset;
+                right: unset;
+                margin-top: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Ovarian Cancer Prediction</h1>
+    <form method="POST" action="/predict">
+        {% for feature in features %}
+            <label for="{{ feature }}">{{ feature }}</label>
+            <input type="number" step="any" name="{{ feature }}" id="{{ feature }}" required>
+        {% endfor %}
+        <button type="submit">Predict</button>
+    </form>
+    <div class="result">
+        {% if result %}
+            <h3>Prediction: {{ result }}</h3>
+            <p>Probability of cancer: {{ probability }}</p>
+        {% elif error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
